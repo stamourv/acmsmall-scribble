@@ -79,7 +79,7 @@ FORMAT
   [keywords               "keywords"]
   [paragraph              "paragraph"]
   [paragraph*             "paragraph*"]
-  [acknowledgments        "acknowledgments"])
+  [acknowledgments        "toplasacknowledgments"])
 
 (define-pre-title-wrappers
   [acm-volume  "acmVolume"]
