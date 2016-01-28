@@ -74,10 +74,10 @@ FORMAT
 
 (define-wrappers
   [affil                  "affil"]
-  [subject-classification "subjclass"]
   [paragraph              "paragraph"]
   [paragraph*             "paragraph*"]
-  [acknowledgments        "toplasacknowledgments"])
+  [acknowledgments        "toplasacknowledgments"]
+  [set-copyright          "setcopyright"])
 
 (define-pre-title-wrappers
   [acm-volume   "acmVolume"]
