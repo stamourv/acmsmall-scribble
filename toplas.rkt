@@ -13,7 +13,7 @@
          (except-out (all-from-out scribble/doclang)
                      -#%module-begin)
          (rename-out [--#%module-begin #%module-begin])
-         markboth ccsxml ccsdesc)
+         markboth ccsxml ccsdesc received)
 
 ;; header mostly taken from the lipics sample article
 (define (post-process doc)
@@ -75,23 +75,24 @@ FORMAT
 (define-wrappers
   [affil                  "affil"]
   [subject-classification "subjclass"]
-  [terms                  "terms"]
-  [keywords               "keywords"]
   [paragraph              "paragraph"]
   [paragraph*             "paragraph*"]
   [acknowledgments        "toplasacknowledgments"])
 
 (define-pre-title-wrappers
-  [acm-volume  "acmVolume"]
-  [acm-number  "acmNumber"]
-  [acm-article "acmArticle"]
-  [acm-year    "acmYear"]
-  [acm-month   "acmMonth"]
-  [doi         "doi"]
-  [issn        "issn"]
-  [abstract    "toplasabstract"]
-  [author      "author"]
-  )
+  [acm-volume   "acmVolume"]
+  [acm-number   "acmNumber"]
+  [acm-article  "acmArticle"]
+  [acm-year     "acmYear"]
+  [acm-month    "acmMonth"]
+  [doi          "doi"]
+  [issn         "issn"]
+  [abstract     "toplasabstract"]
+  [author       "author"]
+  [terms        "terms"]
+  [keywords     "keywords"]
+  [acm-format   "acmformat"] ; see acmsmall docs for what that is
+  [bottom-stuff "toplasbottomstuff"])
 (define-includer include-abstract "toplasabstract")
 
 (define (markboth authors name)
@@ -114,6 +115,14 @@ FORMAT
    (make-multiarg-element (make-style "toplasccsdesc" '(exact-chars))
                           (list (decode-content (list (number->string n)))
                                 content))))
+
+(define (received x1 x2 x3)
+  (make-paragraph
+   (make-style #f '())
+   (make-multiarg-element (make-style "received" '())
+                          (list (decode-content (list x1))
+                                (decode-content (list x2))
+                                (decode-content (list x3))))))
 
 
 ;; Download necessary style files
