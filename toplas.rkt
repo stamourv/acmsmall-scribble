@@ -3,7 +3,8 @@
 ;; based heavily on lipics
 
 (require "download.rkt"
-         scribble/base scribble/core scribble/decode
+         scribble/base scribble/decode
+         (except-in scribble/core paragraph)
          (rename-in scribble/doclang [#%module-begin -#%module-begin])
          scribble/private/defaults
          (for-syntax racket/base))
@@ -11,7 +12,8 @@
 (provide (all-from-out scribble/base)
          (except-out (all-from-out scribble/doclang)
                      -#%module-begin)
-         (rename-out [--#%module-begin #%module-begin]))
+         (rename-out [--#%module-begin #%module-begin])
+         markboth ccsxml ccsdesc)
 
 ;; header mostly taken from the lipics sample article
 (define (post-process doc)
@@ -52,7 +54,7 @@ FORMAT
     (define (name . str)
       (make-paragraph
        (make-style 'pretitle '())
-       (make-multiarg-element
+       (make-element
         (make-style style '())
         (decode-content str))))
     ...
@@ -71,9 +73,12 @@ FORMAT
     (provide name)))
 
 (define-wrappers
+  [affil                  "affil"]
   [subject-classification "subjclass"]
   [terms                  "terms"]
   [keywords               "keywords"]
+  [paragraph              "paragraph"]
+  [paragraph*             "paragraph*"]
   [acknowledgments        "acknowledgments"])
 
 (define-pre-title-wrappers
@@ -83,7 +88,33 @@ FORMAT
   [acm-year    "acmYear"]
   [acm-month   "acmMonth"]
   [doi         "doi"]
-  [issn        "issn"])
+  [issn        "issn"]
+  [abstract    "toplasabstract"]
+  [author      "author"]
+  )
+(define-includer include-abstract "toplasabstract")
+
+(define (markboth authors name)
+  (make-paragraph
+   (make-style 'pretitle '())
+   (make-multiarg-element (make-style "markboth" '())
+                          (list (decode-content (list authors))
+                                (decode-content (list name))))))
+
+(define (ccsxml . content) ; see http://dl.acm.org/ccs.cfm for these two
+  (make-paragraph
+   (make-style 'pretitle '(exact-chars))
+   (make-element (make-style #f '(exact-chars))
+                 (list "\\begin{CCSXML}\n"
+                       content
+                       "\n\\end{CCSXML}\n"))))
+(define (ccsdesc n . content)
+  (make-paragraph
+   (make-style 'pretitle '(exact-chars))
+   (make-multiarg-element (make-style "toplasccsdesc" '(exact-chars))
+                          (list (decode-content (list (number->string n)))
+                                content))))
+
 
 ;; Download necessary style files
 (download-acmsmall-files)
