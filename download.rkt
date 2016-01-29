@@ -35,7 +35,7 @@
       (with-input-from-file tmp
         (λ () (md5 (current-input-port) #t))))
     (unless (equal? hash acmsmall-hash)
-      (raise-arguments-error 'scribble/toplas
+      (raise-arguments-error 'scribble/acmsmall
                              "Invalid MD5 hash for acmsmall tarball"
                              "expected" acmsmall-hash
                              "given" hash))

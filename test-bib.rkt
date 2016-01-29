@@ -2,11 +2,11 @@
 
 (require scriblib/autobib scribble/core (only-in scribble/manual emph)
          scribble/decode scribble/base
-         (only-in scribble/toplas toplas-style))
+         (only-in scribble/acmsmall acmsmall-style))
 
 (provide (all-defined-out))
 
-(define-cite cite citet gen-bib #:style toplas-style)
+(define-cite cite citet gen-bib #:style acmsmall-style)
 
 (define bagwell (author-name "Phil" "Bagwell"))
 (define okasaki (author-name "Chris" "Okasaki"))

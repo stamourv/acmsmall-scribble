@@ -18,31 +18,31 @@
                      -#%module-begin)
          (rename-out [--#%module-begin #%module-begin])
          markboth ccsxml ccsdesc received
-         toplas-style)
+         acmsmall-style)
 
-;; header mostly taken from the acmsmall sample article
-(define (post-process doc)
+(define ((post-process journal) doc)
   (add-defaults doc
-                (string->bytes/utf-8 #<<FORMAT
+                (string->bytes/utf-8 (format #<<FORMAT
 %% Scribble needs these options, so provide before acmsmall
 \PassOptionsToPackage{usenames,dvipsnames}{color}
-\documentclass[prodmode,acmtoplas]{acmsmall}
+\documentclass[prodmode,~a]{acmsmall}
 \bibliographystyle{plain}
 FORMAT
+journal)
 )
-                (collection-file-path "style.tex" "scribble" "toplas")
+                (collection-file-path "style.tex" "scribble" "acmsmall")
                 (list acmsmall-class-path acmcopyright-style-path)
                 #f))
 
 (define-syntax (--#%module-begin stx)
   (syntax-case stx ()
-    [(_ ?e ...)
+    [(_ journal ?e ...)
      (quasisyntax/loc stx
-       (-#%module-begin doc post-process () ?e ...))]))
+       (-#%module-begin doc (post-process '#,(syntax->datum #'journal)) () ?e ...))]))
 
 ;; Reader configuration for #lang
 (module reader scribble/base/reader
-  scribble/toplas
+  scribble/acmsmall
   #:wrapper1 (lambda (t) (t)))
 
 ;; command wrappers
@@ -80,7 +80,7 @@ FORMAT
   [affil                  "affil"]
   [paragraph              "paragraph"]
   [paragraph*             "paragraph*"]
-  [acknowledgments        "toplasacknowledgments"]
+  [acknowledgments        "acmsmallacknowledgments"]
   [set-copyright          "setcopyright"])
 
 (define-pre-title-wrappers
@@ -91,13 +91,13 @@ FORMAT
   [acm-month    "acmMonth"]
   [doi          "doi"]
   [issn         "issn"]
-  [abstract     "toplasabstract"]
+  [abstract     "acmsmallabstract"]
   [author       "author"]
   [terms        "terms"]
   [keywords     "keywords"]
   [acm-format   "acmformat"] ; see acmsmall docs for what that is
-  [bottom-stuff "toplasbottomstuff"])
-(define-includer include-abstract "toplasabstract")
+  [bottom-stuff "acmsmallbottomstuff"])
+(define-includer include-abstract "acmsmallabstract")
 
 (define (markboth authors name)
   (make-paragraph
@@ -116,7 +116,7 @@ FORMAT
 (define (ccsdesc n . content)
   (make-paragraph
    (make-style 'pretitle '(exact-chars))
-   (make-multiarg-element (make-style "toplasccsdesc" '(exact-chars))
+   (make-multiarg-element (make-style "acmsmallccsdesc" '(exact-chars))
                           (list (decode-content (list (number->string n)))
                                 content))))
 
@@ -143,7 +143,7 @@ FORMAT
 (define colbibnumber-style (make-style "Autocolbibnumber" autobib-style-extras))
 (define colbibentry-style (make-style "Autocolbibentry" autobib-style-extras))
 
-(define toplas-style
+(define acmsmall-style
   (new
    (class object%
      (define/public (bibliography-table-style) bib-single-style)

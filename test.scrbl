@@ -1,4 +1,4 @@
-#lang scribble/toplas
+#lang scribble/acmsmall acmtoplas
 
 @require[scriblib/footnote "test-bib.rkt"]
 
