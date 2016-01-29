@@ -128,7 +128,7 @@ journal)
 (define (received x1 x2 x3)
   (make-paragraph
    (make-style #f '())
-   (make-multiarg-element (make-style "received" '())
+   (make-multiarg-element (make-style "acmsmallreceived" '())
                           (list (decode-content (list x1))
                                 (decode-content (list x2))
                                 (decode-content (list x3))))))

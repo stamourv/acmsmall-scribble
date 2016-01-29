@@ -201,6 +201,6 @@ The authors would like to thank Dr. Maura Turolla of Telecom
 Italia for providing specifications about the application scenario.
 }
 
-@gen-bib[#:sec-title "REFERENCES"]
-
 @received["February 2007" "March 2009" "June 2009"]
+
+@gen-bib[#:sec-title "REFERENCES"]
