@@ -30,6 +30,13 @@ Also see the
             "example document")
 to get started.
 
+Known differences in actual TeX-based @tt{acmsmall} documents:
+@itemlist[
+@item{Bibliography entries are: "Author. Year. Title, ...".}
+@item{Figures have no hrules, and captions look different.}
+@item{Tables use the ACM's special commands.}
+]
+
 
 @defproc[(author [name pre-content?] [affil pre-content?] ... ...)
          paragraph?]{
