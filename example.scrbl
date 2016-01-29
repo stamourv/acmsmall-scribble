@@ -1,6 +1,6 @@
 #lang scribble/acmsmall acmtoplas
 
-@require[scriblib/footnote scriblib/figure "test-bib.rkt"]
+@require[scriblib/footnote scriblib/figure "example-bib.rkt"]
 
 @acm-volume{9}
 @acm-number{4}
