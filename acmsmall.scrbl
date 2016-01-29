@@ -102,4 +102,7 @@ Sets various relevant dates. Must be in the last section of the paper.
   A value used to customize bibliography generation for the paper.
   Provide this as an argument for the @racket[define-cite] form using
   the @racket[#:style] keyword.
+
+  To have the proper bibliography title, use @racket[#:sec-title "REFERENCES"]
+  when generating the bibliography.
 }
