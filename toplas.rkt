@@ -20,12 +20,11 @@
          markboth ccsxml ccsdesc received
          toplas-style)
 
-;; header mostly taken from the lipics sample article
+;; header mostly taken from the acmsmall sample article
 (define (post-process doc)
   (add-defaults doc
-                ;; FIXME: allow configuration
                 (string->bytes/utf-8 #<<FORMAT
-%% Scribble needs these options, so provide before toplas
+%% Scribble needs these options, so provide before acmsmall
 \PassOptionsToPackage{usenames,dvipsnames}{color}
 \documentclass[prodmode,acmtoplas]{acmsmall}
 \bibliographystyle{plain}
