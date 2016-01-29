@@ -2,6 +2,11 @@
 
 ;; based heavily on lipics
 
+;; known discrepancies with actual tex-based acmsmall output:
+;; - bibliography entries are: "Author. Yeah. Title, ...", autobib can't do that
+;; - figures have hrules, and "Figure N" and captions look different
+;; - tables don't use the ACM's special commands
+
 (require "download.rkt"
          racket/class
          scribble/base scribble/decode

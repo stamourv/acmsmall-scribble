@@ -1,6 +1,6 @@
 #lang scribble/acmsmall acmtoplas
 
-@require[scriblib/footnote "test-bib.rkt"]
+@require[scriblib/footnote scriblib/figure "test-bib.rkt"]
 
 @acm-volume{9}
 @acm-number{4}
@@ -117,6 +117,8 @@ While collecting all these multimedia information
 [Akyildiz 2002] requires a high network throughput, off-the-shelf
 sensor devices only provide very limited bandwidth in a single
 channel: 19.2Kbps in MICA2 [Bahl 2002] and 250Kbps in MICAz.
+
+@figure["fig" "caption"]{this is a figure}
 
 In this article, we propose MMSN, abbreviation for Multifrequency
 Media access control for wireless Sensor Networks. The main
