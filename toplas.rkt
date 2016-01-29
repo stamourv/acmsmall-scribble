@@ -3,17 +3,22 @@
 ;; based heavily on lipics
 
 (require "download.rkt"
+         racket/class
          scribble/base scribble/decode
          (except-in scribble/core paragraph)
          (rename-in scribble/doclang [#%module-begin -#%module-begin])
          scribble/private/defaults
+         scribble/html-properties scribble/latex-properties
+         setup/main-collects
+         setup/collects
          (for-syntax racket/base))
 
 (provide (all-from-out scribble/base)
          (except-out (all-from-out scribble/doclang)
                      -#%module-begin)
          (rename-out [--#%module-begin #%module-begin])
-         markboth ccsxml ccsdesc received)
+         markboth ccsxml ccsdesc received
+         toplas-style)
 
 ;; header mostly taken from the lipics sample article
 (define (post-process doc)
@@ -23,7 +28,7 @@
 %% Scribble needs these options, so provide before toplas
 \PassOptionsToPackage{usenames,dvipsnames}{color}
 \documentclass[prodmode,acmtoplas]{acmsmall}
-\setcopyright{rightsretained}
+\bibliographystyle{plain}
 FORMAT
 )
                 (collection-file-path "style.tex" "scribble" "toplas")
@@ -123,6 +128,40 @@ FORMAT
                           (list (decode-content (list x1))
                                 (decode-content (list x2))
                                 (decode-content (list x3))))))
+
+
+;; Bibliography setup
+(define autobib-style-extras
+  (let ([abs (lambda (s)
+               (path->main-collects-relative
+                (collection-file-path s "scriblib")))])
+    (list
+     (make-css-addition (abs "autobib.css"))
+     (make-tex-addition (abs "autobib.tex")))))
+
+(define bib-single-style (make-style "AutoBibliography" autobib-style-extras))
+(define bibentry-style (make-style "Autobibentry" autobib-style-extras))
+(define colbibnumber-style (make-style "Autocolbibnumber" autobib-style-extras))
+(define colbibentry-style (make-style "Autocolbibentry" autobib-style-extras))
+
+(define toplas-style
+  (new
+   (class object%
+     (define/public (bibliography-table-style) bib-single-style)
+     (define/public (entry-style) colbibentry-style)
+     (define/public (disambiguate-date?) #f)
+     (define/public (collapse-for-date?) #f)
+     (define/public (get-cite-open) "[")
+     (define/public (get-cite-close) "]")
+     (define/public (get-group-sep) "; ")
+     (define/public (get-item-sep) ", ")
+     (define/public (render-citation date-cite i) date-cite)
+     (define/public (render-author+dates author dates) (list* author " " dates))
+     (define (make-label i)
+       (string-append "autobiblab:" (number->string i)))
+     (define/public (bibliography-line i e)
+       (list e))
+     (super-new))))
 
 
 ;; Download necessary style files
