@@ -127,10 +127,11 @@ journal)
 (define (received x1 x2 x3)
   (make-paragraph
    (make-style #f '())
-   (make-multiarg-element (make-style "acmsmallreceived" '())
-                          (list (decode-content (list x1))
-                                (decode-content (list x2))
-                                (decode-content (list x3))))))
+   (make-element (make-style #f '(exact-chars))
+                 (list (format "\\renewcommand{\\postDoc}{\\received{~a}{~a}{~a}}"
+                               (decode-content (list x1))
+                               (decode-content (list x2))
+                               (decode-content (list x3)))))))
 
 
 ;; Bibliography setup
