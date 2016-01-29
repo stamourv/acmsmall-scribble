@@ -6,3 +6,5 @@
 
 (define pkg-desc "Port of the acmsmall style to Scribble")
 (define pkg-authors '(stamourv))
+
+(define scribblings '(("acmsmall.scrbl" () ("Scribble Libraries"))))
