@@ -72,7 +72,6 @@ to get started.
               @defproc[(acm-month [pre-content pre-content?] ...) paragraph?]
               @defproc[(doi [pre-content pre-content?] ...) paragraph?]
               @defproc[(issn [pre-content pre-content?] ...) paragraph?]
-              @defproc[(terms [pre-content pre-content?] ...) paragraph?]
               @defproc[(keywords [pre-content pre-content?] ...) paragraph?]
               @defproc[(acm-format [pre-content pre-content?] ...) paragraph?]
               @defproc[(bottom-stuff [pre-content pre-content?] ...) paragraph?]

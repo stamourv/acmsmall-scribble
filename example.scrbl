@@ -74,8 +74,6 @@ synchronization errors.
 @ccsdesc[200]{Computer systems organization~Robotics}
 @ccsdesc[100]{Networks~Network reliability}
 
-@terms{Design, Algorithms, Performance}
-
 @keywords{Wireless sensor networks, media access control,
 multi-channel, radio interference, time synchronization}
 

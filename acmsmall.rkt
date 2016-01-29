@@ -98,7 +98,6 @@ journal)
   [issn         "issn"]
   [abstract     "acmsmallabstract"]
   [author       "author"]
-  [terms        "terms"]
   [keywords     "keywords"]
   [acm-format   "acmformat"] ; see acmsmall docs for what that is
   [bottom-stuff "acmsmallbottomstuff"])
