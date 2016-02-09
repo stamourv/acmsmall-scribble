@@ -146,7 +146,7 @@ journal)
 (define bib-single-style (make-style "AutoBibliography" autobib-style-extras))
 (define bibentry-style (make-style "Autobibentry" autobib-style-extras))
 (define colbibnumber-style (make-style "Autocolbibnumber" autobib-style-extras))
-(define colbibentry-style (make-style "Autocolbibentry" autobib-style-extras))
+(define colbibentry-style (make-style "acmsmallAutocolbibentry" autobib-style-extras))
 
 (define acmsmall-style
   (new
