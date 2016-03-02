@@ -22,19 +22,17 @@
          (except-out (all-from-out scribble/doclang)
                      -#%module-begin)
          (rename-out [--#%module-begin #%module-begin])
-         markboth ccsxml ccsdesc received
+         markboth ccsxml ccsdesc received include-abstract
          acmsmall-style)
 
 (define ((post-process journal) doc)
-  (add-defaults doc
-                (string->bytes/utf-8 (format #<<FORMAT
+  (add-defaults doc (string->bytes/utf-8 (format #<<FORMAT
 %% Scribble needs these options, so provide before acmsmall
 \PassOptionsToPackage{usenames,dvipsnames}{color}
 \documentclass[prodmode,~a]{acmsmall}
 \bibliographystyle{plain}
 FORMAT
-journal)
-)
+journal))
                 (collection-file-path "style.tex" "scribble" "acmsmall")
                 (list acmsmall-class-path acmcopyright-style-path)
                 #f))
@@ -68,19 +66,6 @@ journal)
         (decode-content str))))
     ...
     (provide name ...)))
-(define-syntax-rule (define-includer name style)
-  (begin
-    (define-syntax (name stx)
-      (syntax-case stx ()
-        [(_ module)
-         (let ()
-           (define name* (gensym 'name))
-           #'(begin
-               (require (rename-in module [doc name*]))
-               (make-nested-flow (make-style style '(command))
-                                 (part-blocks name*))))]))
-    (provide name)))
-
 (define-wrappers
   [affil                  "affil"]
   [paragraph              "paragraph"]
@@ -101,7 +86,33 @@ journal)
   [keywords     "keywords"]
   [acm-format   "acmformat"] ; see acmsmall docs for what that is
   [bottom-stuff "acmsmallbottomstuff"])
-(define-includer include-abstract "acmsmallabstract")
+
+;; abstract has to be before the title
+;; but there's got to be a better way to do it...
+(define-syntax (include-abstract stx)
+  (syntax-case stx ()
+    [(_ module)
+     (let ()
+       (define name* (gensym 'name))
+       #'(begin
+           (require (rename-in module [doc name*]))
+           (make-compound-paragraph
+            (make-style #f null)
+            (append
+             (list (make-paragraph
+                    (make-style 'pretitle '(exact-chars))
+                    (make-element
+                     (make-style #f '(exact-chars))
+                     (list "\\begin{abstract}\n"))))
+             (for/list ([p (in-list (part-blocks name*))])
+               (make-paragraph (make-style 'pretitle null)
+                               (paragraph-content p)))
+             (list (make-paragraph
+                    (make-style 'pretitle '(exact-chars))
+                    (make-element
+                     (make-style #f '(exact-chars))
+                     (list "\n\\end{abstract}"))))
+             ))))]))
 
 (define (markboth authors name)
   (make-paragraph
