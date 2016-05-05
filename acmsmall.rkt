@@ -16,7 +16,8 @@
          scribble/html-properties scribble/latex-properties
          setup/main-collects
          setup/collects
-         (for-syntax racket/base))
+         (for-syntax racket/base
+                     racket/syntax))
 
 (provide (all-from-out scribble/base)
          (except-out (all-from-out scribble/doclang)
@@ -40,8 +41,9 @@ journal))
 (define-syntax (--#%module-begin stx)
   (syntax-case stx ()
     [(_ journal ?e ...)
-     (quasisyntax/loc stx
-       (-#%module-begin doc (post-process '#,(syntax->datum #'journal)) () ?e ...))]))
+     (with-syntax ([doc (format-id stx "doc")])
+       (quasisyntax/loc stx
+         (-#%module-begin doc (post-process '#,(syntax->datum #'journal)) () ?e ...)))]))
 
 ;; Reader configuration for #lang
 (module reader scribble/base/reader
