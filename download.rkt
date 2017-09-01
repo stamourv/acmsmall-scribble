@@ -13,8 +13,8 @@
          acmcopyright-style-path
          download-acmsmall-files)
 
-(define acmsmall-url  "http://www.acm.org/publications/article-templates/acmsmall.zip")
-(define acmsmall-hash #"b45bdb0dde8612ba82f62d203ef01644")
+(define acmsmall-url  "https://www.acm.org/binaries/content/assets/publications/article-templates/acmsmall.zip")
+(define acmsmall-hash #"899c6e8cd7dde85bed83f2654fb36fa4")
 
 (define acmsmall-base-path
   (build-path (find-system-path 'addon-dir) "acmsmall-style-files"))
