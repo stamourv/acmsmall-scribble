@@ -43,7 +43,10 @@ journal))
     [(_ journal ?e ...)
      (with-syntax ([doc (format-id stx "doc")])
        (quasisyntax/loc stx
-         (-#%module-begin doc (post-process '#,(syntax->datum #'journal)) () ?e ...)))]))
+         (-#%module-begin doc (post-process '#,(syntax->datum #'journal)) ()
+                          ;; Download necessary style files, if needed
+                          (download-acmsmall-files)
+                          ?e ...)))]))
 
 ;; Reader configuration for #lang
 (module reader scribble/base/reader
@@ -179,7 +182,3 @@ journal))
      (define/public (bibliography-line i e)
        (list e))
      (super-new))))
-
-
-;; Download necessary style files
-(download-acmsmall-files)
